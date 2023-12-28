@@ -17,13 +17,3 @@ RUN rm -rf texlive
 RUN rm texlive.tar.gz
 
 ENV PATH=$TEXDIR/bin/$ARCH:$PATH
-
-FROM texlive-base as texlive-onfly
-
-RUN apt-get install -y --no-install-recommends python-is-python3
-
-RUN tlmgr install texliveonfly
-
-FROM texlive-onfly
-
-ENTRYPOINT cd files && texliveonfly --compiler=pdflatex --arguments="-synctex=0 -interaction=nonstopmode" WykazDni.tex
